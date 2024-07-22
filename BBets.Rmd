@@ -1,12 +1,13 @@
 ---
 title: "Brownlows Bets"
-author: "Your Name Goes Here"
+author: "Liberty Montez"
 output: 
   html_document:
     number_sections: true
     toc: true
     toc_depth: 5
 date: "`r Sys.Date()`"    
+    
     
 ---
 ```{r setup, include=FALSE}
@@ -32,9 +33,19 @@ There are 3 questions and there should be at least 3 separate commits, at least 
 2. For what size class is a 2:1 odds bet fair.
 3. How much money would Brownlow be expected to end up with if the bets went as described.
 
+
+
+
+
+
+
 ## Our strategy is to build a Function and the use it to answer the three questions. 
 
 The function will be given a class_size by number of students, odds, and Number_of_times brownlow made the bet.  It will give you back how much Brownlows earnings were. We will use it to answer our three questions below. If you can, improve this function by giving default values to some of its inputs. 
+
+
+
+
 
 # In the class and payoff as described  If you highered 40 brownlow substitute teachers to do the same thing that Brownlow did then.
 ## what is their average earnings
@@ -43,26 +54,78 @@ The function will be given a class_size by number of students, odds, and Number_
 <!--Explain and display your method of coming up with a 95% confidence interval of  professor Brownlows winnings (or losings)-->
 
 
+```{r}
+teachers<-numeric(40)
+for(i in 1:40){
+teachers[i]=BrLw()
+}
+```
+
+
+```{r}
+favstats(teachers)
+```
+  
+If the bets went as described by Brownlow, the mean amount of the teachers would average `r mean(teachers)`
+If looking at the standard deviation `r sd(teachers)` We will subtract it two times the mean and add it two times the mean showing the following:
+
+`r mean(teachers) - 2*sd(teachers)` to `r mean(teachers) + 2*sd(teachers)` .  
+  
+
 # What are the fair odds? Use manipulation of odds in the function to tune Brownlows earnings to zero. 
 
 
 <!--Decide on your methods:  In this section explain the approach you will take to attack the issue --- how will you decide on a likely estimate of professor Brownlow's earnings or losses after 637 bets. Also explain how you construct a 95% confidence interval about your estimate of his winnings !-->
 
+Knowing that Brownlow is giving a 2:1 bet that at least two people in the same class have the same birthday, we will be going over the results of the wager to see if they are fair odds in Brownlows earnings. Having the mean of the 40 teachers and subtracting two and adding two standard deviations, we can come up with another way to see if this hypothesis is fair on matching birthdays in a 35 person class. 
 
+My strategy is to make sure that brownlow makes little to zero money on the bet to make it fair. 
+
+```{r}
+teachers<-numeric(40)
+for(i in 1:40){
+teachers[i]=BrLw(odds=4.38)
+}
+```
+
+```{r}
+favstats(teachers)
+```
+We had to mess with the numbers for a while to make this bet fair, and the number we got for a 1:40 bet was an odd of 4.38 which got us as close to zero as possible at a mean of 1.353 that Brownlow makes for his bet. This means my chances of making money like Brownlow are pretty good. 
 
 
 # What size of class makes the 2:1 bet fair?  Use manipulation of number of Students to tune Brownlows earnings to zero.
 
 <!--Explain and display the results of your method of coming up with the estimate of professor Brownlows betting profits!-->
+  
+```{r}
+teachers<-numeric(1000)
+for(i in 1:1000){
+teachers[i]=BrLw(numClass =29)
+}
+```
+  
+```{r}
+favstats(teachers)
+```
 
-
-
-
-
-
+The fair number of students in each class would be 29 students. With this number we are earning about $28. 
 
 
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If professor Brownlow is consistantly making or losing money how could he change his payout so that his profits center on zero?  Also discuss what size his class should be in order to have his current scheme balance at zero profit.!-->
+  
 
+ 
+ 
+```{r}
+teachers<-numeric(1000)
+for(i in 1:1000){
+teachers[i]=BrLw(odds =1, numClass =23)
+}
+```
+ 
+```{r}
+favstats(teachers)
+```
